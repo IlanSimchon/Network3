@@ -6,11 +6,11 @@ ID2 = 58
 
 
 def check_got(xor):
-    bool = xor == (ID1 ^ ID2)
+    bool = (xor == (ID1 ^ ID2))
     return bool
 
 file_path = "myFile1.txt"
-file = open(file_path, "r" )
+file = open(file_path, "r")
 
 file_len = os.path.getsize(file_path)
 half_len = file_len // 2
@@ -35,11 +35,10 @@ part2 = file_read[half_len:]
 file.close()
 print("Sending the len of the file")
 sender_socket.send(str(file_len).encode())
+print(file_len)
 
 send = True
 while send is True:
-    print("Sending the len of the file")
-    sender_socket.send(str(file_len).encode())
 
     print("Defines the CC algorithm be Reno.")
     sender_socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_CONGESTION, b'reno')

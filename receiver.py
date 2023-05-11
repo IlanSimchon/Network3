@@ -28,6 +28,7 @@ sender_socket, sender_address = receiver_socket.accept()
 print("connection Succeeded!")
 
 file_len = int(sender_socket.recv(buffer_size))
+print(file_len)
 
 while file_len != -1:
     print("Defines the CC algorithm be reno.")
@@ -37,6 +38,7 @@ while file_len != -1:
 
     data_size1 = 0
     print("receives the first part of the file")
+    print(file_len // 2)
     while data_size1 < file_len // 2:
         chunk = sender_socket.recv(buffer_size)
         data_size1 += len(chunk.decode())
