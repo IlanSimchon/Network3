@@ -39,7 +39,7 @@ while file_len != -1:
     print("receives the first part of the file")
     while data_size1 < file_len // 2:
         chunk = sender_socket.recv(buffer_size)
-        data_size1 += len(chunk)
+        data_size1 += len(chunk.decode())
         file.write(chunk)
 
     first_part_time = time.time() - start_time

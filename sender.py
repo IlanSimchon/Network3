@@ -74,5 +74,5 @@ while send is True:
     else:
         sender_socket.send("Sending the file again!".encode())
 
- sender_socket.close()
+sender_socket.close()
 
