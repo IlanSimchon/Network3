@@ -4,7 +4,6 @@ import os
 ID1 = 6396
 ID2 = 58
 
-
 def check_got(xor):
     bool = (xor == (ID1 ^ ID2))
     return bool
@@ -24,7 +23,7 @@ buffer_size = sender_socket.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
 print("Connecting to receiver...")
 sender_socket.connect((receiver_ip, receiver_port))
 
-print("connection Succeeded!")
+print("connection Succeeded!\n")
 
 # read and split the file
 file_read = file.read()
@@ -33,9 +32,8 @@ part1 = file_read[:half_len]
 part2 = file_read[half_len:]
 
 file.close()
-print("Sending the len of the file")
+print("Sending the len of the file\n")
 sender_socket.send(str(file_len).encode())
-print(file_len)
 
 send = True
 while send is True:
@@ -49,9 +47,9 @@ while send is True:
 
     xor = float(sender_socket.recv(buffer_size).decode())
     if check_got(xor) is False:
-        Exception
+        raise Exception
     else:
-        print("Succeeded!")
+        print("Succeeded!\n")
 
     print("Defines the CC algorithm be Cubic")
     sender_socket.setsockopt(socket.IPPROTO_TCP , socket.TCP_CONGESTION , b'cubic')
@@ -63,9 +61,10 @@ while send is True:
     if check_got(xor) is False:
         raise Exception
     else:
-        print("Succeeded!")
+        print("Succeeded!\n")
 
     again = input("Should you send the file again? (y/n):")
+    print()
     if again == "n":
         send = False
         sender_socket.send("Stop sending the file".encode())
@@ -73,5 +72,6 @@ while send is True:
     else:
         sender_socket.send("Sending the file again!".encode())
 
+print("Close the connection..")
 sender_socket.close()
 

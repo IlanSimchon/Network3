@@ -2,7 +2,6 @@ import socket
 import time
 from statistics import mean
 
-
 ID1 = 6396
 ID2 = 58
 
@@ -25,10 +24,9 @@ receiver_socket.listen(1)
 print("listening on IP:",receiver_ip," Port:",receiver_port)
 
 sender_socket, sender_address = receiver_socket.accept()
-print("connection Succeeded!")
+print("connection Succeeded!\n")
 
 file_len = int(sender_socket.recv(buffer_size))
-print(file_len)
 
 while file_len != -1:
     print("Defines the CC algorithm be reno.")
@@ -38,7 +36,6 @@ while file_len != -1:
 
     data_size1 = 0
     print("receives the first part of the file")
-    print(file_len // 2)
     while data_size1 < file_len // 2:
         chunk = sender_socket.recv(buffer_size)
         data_size1 += len(chunk.decode())
@@ -47,7 +44,7 @@ while file_len != -1:
     first_part_time = time.time() - start_time
     part1_time.append(first_part_time)
 
-    print("Sending OK to the sender")
+    print("Sending OK to the sender\n")
     sender_socket.send((str(ID1 ^ ID2)).encode())
 
     print("Defines the CC algorithm be Cubic..")
@@ -64,23 +61,23 @@ while file_len != -1:
     second_part_time = time.time() - start_time
     part2_time.append(second_part_time)
 
-    print("Sending OK to the sender")
+    print("Sending OK to the sender\n")
     sender_socket.send((str(ID1 ^ ID2)).encode())
 
     decision = sender_socket.recv(buffer_size).decode()
-    print(decision)
+    print(decision,'\n')
     if decision == "Stop sending the file":
         file_len = -1
         sender_socket.send("Thank you, goodbye!".encode())
 
-for i in range(len(part1_time)):
-    print("Time of receiving number " , i , ": ")
-    print("part 1: " , part1_time[i] , " seconds")
-    print("part 2: " , part2_time[i] , " seconds")
+for i in range(1, len(part1_time)+1):
+    print("Time of receiving number " , i , ":")
+    print("part 1: " , part1_time[i-1] , " seconds")
+    print("part 2: " , part2_time[i-1] , " seconds\n")
 
 print("Average of part 1:", mean(part1_time), "seconds")
 print("Average of part 2:", mean(part2_time), "seconds")
-print("Total Average: ", mean(part1_time+part2_time), "seconds")
+print("Total Average: ", mean(part1_time+part2_time), "seconds\n")
 
 
 print("Close the connection..")
